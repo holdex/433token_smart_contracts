@@ -2,6 +2,7 @@ pragma solidity ^0.4.24;
 
 
 import "./Staff.sol";
+import "./StaffUtil.sol";
 import "./Token.sol";
 import "./DiscountPhases.sol";
 import "./DiscountStructs.sol";
@@ -134,7 +135,7 @@ contract Crowdsale is StaffUtil {
 
 		require(startDate < crowdsaleStartDate);
 		require(crowdsaleStartDate < endDate);
-		require(tokenRate > 0);
+		require(tokenDecimals > 0);
 		require(tokenRate > 0);
 		require(tokensForSaleCap > 0);
 		require(minPurchaseInWei <= maxInvestorContributionInWei);

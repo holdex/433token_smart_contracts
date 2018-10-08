@@ -2,9 +2,12 @@ pragma solidity ^0.4.24;
 
 
 import "./Staff.sol";
+import "./StaffUtil.sol";
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
 
 contract DiscountPhases is StaffUtil {
+	using SafeMath for uint256;
 
 	event DiscountPhaseAdded(uint index, string name, uint8 percent, uint fromDate, uint toDate, uint timestamp, address byStaff);
 	event DiscountPhaseRemoved(uint index, uint timestamp, address byStaff);
@@ -23,14 +26,14 @@ contract DiscountPhases is StaffUtil {
 	function calculateBonusAmount(uint256 _purchasedAmount) public constant returns (uint256) {
 		for (uint i = 0; i < discountPhases.length; i++) {
 			if (now >= discountPhases[i].fromDate && now <= discountPhases[i].toDate) {
-				return _purchasedAmount * discountPhases[i].percent / 100;
+				return _purchasedAmount.mul(discountPhases[i].percent).div(100);
 			}
 		}
 	}
 
 	function addDiscountPhase(string _name, uint8 _percent, uint _fromDate, uint _toDate) public onlyOwnerOrStaff {
 		require(bytes(_name).length > 0);
-		require(_percent > 0);
+		require(_percent > 0 && _percent <= 100);
 
 		if (now > _fromDate) {
 			_fromDate = now;

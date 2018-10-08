@@ -1,4 +1,4 @@
 node_modules
 build
+flattened/*.sol
 .env
-.idea

@@ -12,6 +12,7 @@ module.exports = function (deployer) {
         .then(() => deployer.deploy(DiscountStructs, Staff.address))
         .then(() => deployer.deploy(PromoCodes, Staff.address))
         .then(() => deployer.deploy(Commission,
+            Staff.address,
             process.env.ETH_FUNDS_WALLET,
             [
                 // 'address #1',
